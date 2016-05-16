@@ -6,13 +6,7 @@ gi.require_version('Gtk', '3.0')
 gi.require_version('GtkSource', '3.0')
 from gi.repository import Gtk
 
-
-class HorzaWindow(Gtk.ApplicationWindow):
-    def __init__(self, app):
-        self.app = app
-
-        Gtk.Window.__init__(self, title="horza", application=app)
-        self.set_wmclass("horza", "horza")
+from views.main import HorzaWindow
 
 
 class HorzaApplication(Gtk.Application):
