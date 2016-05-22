@@ -2,9 +2,15 @@ import os
 
 
 class Settings(object):
+    BASE_DIR = os.path.dirname(__file__)
+
     DB_PATH = os.path.join(os.path.expanduser("~"), ".horza")
     DB_URL = "sqlite:///%s/horza.sqlite3" % DB_PATH
     DB_ECHO = True
+
+    # Interface
+    WINDOW_WIDTH = 700
+    WINDOW_HEIGHT = 550
 
     LOGGING = {
         'version': 1,
