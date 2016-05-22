@@ -1,3 +1,4 @@
+import logging
 import os
 
 import gi
@@ -9,6 +10,9 @@ from sqlalchemy.exc import IntegrityError
 
 from horza import session
 from horza.models import Repository
+
+
+logger = logging.getLogger(__name__)
 
 
 class HorzaWindow(Gtk.ApplicationWindow):
@@ -51,5 +55,7 @@ class HorzaWindow(Gtk.ApplicationWindow):
             try:
                 session.commit()
             except IntegrityError:
-                print("Path is already exists")
+                logger.debug("Path %s is already in the database" % path)
+            else:
+                logger.debug("Path %s created with id %s" % (path, repo.id))
         dialog.destroy()
