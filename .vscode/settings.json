@@ -1,8 +1,6 @@
 // Place your settings in this file to overwrite default and user settings.
 {
     "python.autoComplete.extraPaths": [
-        "/home/jsn/.cache/fakegir",
-        "/usr/lib64/python3.4/site-packages"
+        "/home/jsn/.cache/fakegir"
     ]
-
 }
