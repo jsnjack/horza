@@ -9,7 +9,7 @@ class Repository(Base):
     __tablename__ = "repository"
 
     id = Column(Integer, primary_key=True)
-    path = Column(String)
+    path = Column(String, unique=True)
 
     def __repr__(self):
         return "<Repository {} {}>".format(self.id, self.path)

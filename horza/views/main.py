@@ -1,7 +1,14 @@
+import os
+
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('GtkSource', '3.0')
 from gi.repository import Gtk
+
+from sqlalchemy.exc import IntegrityError
+
+from horza import session
+from horza.models import Repository
 
 
 class HorzaWindow(Gtk.ApplicationWindow):
@@ -25,4 +32,24 @@ class HorzaWindow(Gtk.ApplicationWindow):
         """
         Add new repository
         """
-        print("1")
+        dialog = Gtk.FileChooserDialog(
+            "Add repository", self, Gtk.FileChooserAction.SELECT_FOLDER,
+            ("_Cancel", Gtk.ResponseType.CANCEL,
+             "_Open", Gtk.ResponseType.OK)
+        )
+
+        open_button = dialog.get_header_bar().get_children()[1]
+        open_button.get_style_context().add_class("suggested-action")
+
+        dialog.set_current_folder(os.path.expanduser("~"))
+
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            path = dialog.get_filename()
+            repo = Repository(path=path)
+            session.add(repo)
+            try:
+                session.commit()
+            except IntegrityError:
+                print("Path is already exists")
+        dialog.destroy()
